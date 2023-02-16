@@ -1,6 +1,10 @@
-const { addUser } = require("../Services/user.service");
+const userService = require("../Services/user.service");
 
-function addUser() {
-  return addUser();
+async function addUser(user) {
+  return await userService.addUser(user);
 }
-//module.exports = { addUser };
+async function loginUser(user) {
+  return await userService.loginUser(user);
+}
+
+module.exports = { addUser, loginUser };

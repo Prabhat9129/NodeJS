@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const medicineTypeSchma = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
-    require: true,
+    unique: [true, "Name must be unique"],
+    require: [true, "Name is Required"],
   },
   addedBy: {
     type: mongoose.Types.ObjectId,
     ref: "user",
-    require: true,
+    require: [true, "User id is required"],
   },
   addedDate: {
     type: Date,

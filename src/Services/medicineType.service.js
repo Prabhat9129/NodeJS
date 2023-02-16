@@ -1,37 +1,22 @@
-const modelType = require("../Mongoose/model/medicine_type.model");
+const modelType = require("../Mongoose/model/medicineType.model");
 
-async function addType(req, res) {
-  try {
-    const newtype = await modelType.create(req.body);
+async function addType(data, user) {
+  const type = await modelType.findOne({ name: data.name });
+  let newtype = {};
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        newType: newtype,
-      },
+  if (type) {
+    newtype.message = "Data is alredy exits";
+    return newtype;
+  } else {
+    newtype = await modelType.create({
+      name: data.name,
+      addedBy: user._id,
     });
-  } catch (error) {
-    res.status(400).json({
-      status: "fails",
-      message: error.message,
-    });
+    return newtype;
   }
 }
 
-async function findTypes(req, res) {
-  try {
-    const allType = await modelType.find();
-    res.status(200).json({
-      status: "succes",
-      data: {
-        values: allType,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fails",
-      message: error.message,
-    });
-  }
+async function getAllTypes(user) {
+  return user._id;
 }
-module.exports = { addType, findTypes };
+module.exports = { addType, getAllTypes };

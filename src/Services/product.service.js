@@ -7,14 +7,14 @@ async function addProduct(req, res) {
     res.status(201).json({
       status: "success",
       data: {
-        values: newProduct,
+        Medicine: newProduct,
       },
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(404).json({
       status: "fails",
       message: error.message,
     });
   }
 }
-module.exports = { productModel };
+module.exports = { addProduct };

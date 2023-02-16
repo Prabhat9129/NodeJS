@@ -23,10 +23,10 @@ const productSchema = new mongoose.Schema({
     type: String,
   },
   dislikes: {
-    type: string,
+    type: String,
   },
   comments: {
-    type: string,
+    type: String,
   },
 });
 const ProductModel = mongoose.model("medicine", productSchema);
