@@ -8,10 +8,10 @@ const auth = async (req, res, next) => {
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     const user = await userModel.findOne({ _id: decode._id });
     if (!user) throw new Error();
-    res.user = user;
+    req.user = user;
     next();
   } catch (e) {
     res.status(401).send({ error: "please authenticate." });
   }
 };
-module.exports = { auth };
+module.exports = auth;

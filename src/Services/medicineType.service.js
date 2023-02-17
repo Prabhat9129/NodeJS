@@ -1,22 +1,24 @@
 const modelType = require("../Mongoose/model/medicineType.model");
 
-async function addType(data, user) {
+async function addType(data) {
   const type = await modelType.findOne({ name: data.name });
   let newtype = {};
 
   if (type) {
     newtype.message = "Data is alredy exits";
-    return newtype;
-  } else {
-    newtype = await modelType.create({
-      name: data.name,
-      addedBy: user._id,
-    });
+
     return newtype;
   }
+  newtype = await modelType.insertMany({
+    name: data.body.name,
+    addedBy: data.user._id,
+  });
+  return newtype;
 }
 
 async function getAllTypes(user) {
-  return user._id;
+  const types = modelType.find({ addedBy: user.user._id });
+  //console.log(types);
+  return types;
 }
 module.exports = { addType, getAllTypes };

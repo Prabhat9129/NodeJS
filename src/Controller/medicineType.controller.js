@@ -1,7 +1,7 @@
 const type = require("../Services/medicineType.service");
 
-async function addType(data, user) {
-  return await type.addType(data, user);
+async function addType(data) {
+  return await type.addType(data);
 }
 
 async function getAllTypes(user) {

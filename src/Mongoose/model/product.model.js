@@ -15,9 +15,13 @@ const productSchema = new mongoose.Schema({
     ref: "medicineType",
     required: true,
   },
-  addDate: {
+  manufacturDate: {
     type: Date,
-    default: Date.now(),
+    required: true,
+  },
+  expiryDate: {
+    type: Date,
+    required: true,
   },
   likes: {
     type: String,

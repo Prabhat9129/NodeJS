@@ -1,12 +1,13 @@
 const express = require("express");
 const typeRouter = express.Router();
-const { auth } = require("../Middleware/auth.middleware");
+const auth = require("../Middleware/auth.middleware");
 const { addType } = require("../Controller/medicineType.controller");
 const { getAllTypes } = require("../Services/medicineType.service");
+typeRouter.use(auth);
 
-typeRouter.post("/addType", auth, async (req, res) => {
+typeRouter.post("/addType", async (req, res) => {
   try {
-    const newtype = await addType(req.body, auth);
+    const newtype = await addType(req);
     res.status(201).json({
       status: "success",
       data: {
@@ -21,9 +22,9 @@ typeRouter.post("/addType", auth, async (req, res) => {
   }
 });
 
-typeRouter.get("/allTypes", auth, async (req, res) => {
+typeRouter.get("/allTypes", async (req, res) => {
   try {
-    const alltypes = await getAllTypes(auth);
+    const alltypes = await getAllTypes(req);
     res.status(200).json({
       status: "success",
       data: {
