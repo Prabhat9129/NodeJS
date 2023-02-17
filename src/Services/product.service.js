@@ -56,9 +56,26 @@ async function getTypeProducts(data) {
   // console.log(data.params);
   // const product = await modelType.findOne({ name: data.body.mtype });
   // console.log(product);
-  const typeproducts = await ProductModel.aggregate({
-    $join: {},
-  });
+  const typeproducts = await ProductModel.aggregate([
+    {
+      $lookup: {
+        from: "medicinetypes",
+        localField: "mtype",
+        foreignField: "_id",
+        as: "medicinetypes",
+      },
+    },
+    {
+      $unwind: "$medicinetypes",
+    },
+    {
+      $match: {
+        "medicinetypes.name": {
+          $in: [new RegExp(data.params, "i")],
+        },
+      },
+    },
+  ]);
   return typeproducts;
 }
 
