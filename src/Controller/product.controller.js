@@ -4,6 +4,11 @@ const {
   deleteProduct,
   getProducts,
   getTypeProducts,
+  recentProducts,
+  addLikes,
+  adDislikes,
+  addComment,
+  mostLikes,
 } = require("../Services/product.service");
 
 async function addproduct(data) {
@@ -25,10 +30,36 @@ async function getAllProduct(data) {
 async function getByType(data) {
   return await getTypeProducts(data);
 }
+
+async function recentProduct() {
+  return await recentProducts();
+}
+
+async function addlikes(id) {
+  return await addLikes(id);
+}
+
+async function addislikes(id) {
+  return await adDislikes(id);
+}
+
+async function addcomment(id) {
+  return await addComment(id);
+}
+
+async function mostlikes(data) {
+  return await mostLikes(data);
+}
+
 module.exports = {
   addproduct,
   updateproduct,
   deleteproduct,
   getAllProduct,
   getByType,
+  recentProduct,
+  addlikes,
+  addislikes,
+  addcomment,
+  mostlikes,
 };

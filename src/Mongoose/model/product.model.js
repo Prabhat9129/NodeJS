@@ -15,6 +15,10 @@ const productSchema = new mongoose.Schema({
     ref: "medicineType",
     required: true,
   },
+  currentDate: {
+    type: Date,
+    default: Date.now(),
+  },
   manufacturDate: {
     type: Date,
     required: true,
@@ -24,13 +28,18 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   likes: {
-    type: String,
+    type: [{ type: mongoose.Types.ObjectId, ref: "user", required: true }],
   },
   dislikes: {
-    type: String,
+    type: [{ type: mongoose.Types.ObjectId, ref: "user", required: true }],
   },
   comments: {
-    type: String,
+    type: [
+      {
+        userid: { type: mongoose.Types.ObjectId },
+        comment: { type: String, reqired: true },
+      },
+    ],
   },
 });
 const ProductModel = mongoose.model("medicine", productSchema);

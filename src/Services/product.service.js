@@ -1,6 +1,7 @@
 const productModel = require("../Mongoose/model/product.model");
 const modelType = require("../Mongoose/model/medicineType.model");
 const ProductModel = require("../Mongoose/model/product.model");
+const { findByIdAndUpdate } = require("../Mongoose/model/product.model");
 
 async function addProduct(data) {
   const mType = await modelType.findOne({ name: data.body.mtype });
@@ -11,10 +12,8 @@ async function addProduct(data) {
     mtype: mType._id,
     manufacturDate: data.body.manufacturDate,
     expiryDate: data.body.expiryDate,
-    likes: data.body.likes,
-    dislikes: data.body.dislikes,
-    comments: data.body.comments,
   });
+
   return newProduct;
 }
 
@@ -53,9 +52,6 @@ async function getProducts(user) {
 }
 
 async function getTypeProducts(data) {
-  // console.log(data.params);
-  // const product = await modelType.findOne({ name: data.body.mtype });
-  // console.log(product);
   const typeproducts = await ProductModel.aggregate([
     {
       $lookup: {
@@ -79,10 +75,108 @@ async function getTypeProducts(data) {
   return typeproducts;
 }
 
+async function recentProducts() {
+  const product = productModel.find().sort({ currentDate: -1 }).limit(1);
+  return product;
+}
+
+async function addLikes(id) {
+  // console.log(id.user._id.toString());
+  const like = await productModel.findOne({
+    _id: id.params.id,
+    likes: id.user._id.toString(),
+  });
+  console.log("like", like);
+  let data = {};
+  // console.log(data);
+  if (like) {
+    data.message = "Alredy liked";
+    return data;
+  } else {
+    const dislikes = await productModel.findOne({
+      _id: id.params.id,
+      dislikes: id.user._id.toString(),
+    });
+
+    if (dislikes) {
+      await productModel.findByIdAndUpdate(id.params.id, {
+        $pull: { dislikes: id.user._id.toString() },
+      });
+    }
+    data = await productModel.findByIdAndUpdate(
+      id.params.id,
+      {
+        $push: { likes: id.user._id.toString() },
+      },
+      { returnOriginal: false }
+    );
+  }
+
+  return data;
+}
+
+async function adDislikes(id) {
+  const dislike = await productModel.findOne({
+    _id: id.params.id,
+    dislikes: id.user._id.toString(),
+  });
+
+  let data = {};
+  if (dislike) {
+    data.message = "Alredy Dislike";
+    return data;
+  } else {
+    const like = await productModel.findOne({
+      _id: id.params.id,
+      likes: id.user._id.toString(),
+    });
+
+    if (like) {
+      await productModel.findByIdAndUpdate(id.params.id, {
+        $pull: { likes: id.user._id.toString() },
+      });
+    }
+    data = await productModel.findByIdAndUpdate(
+      id.params.id,
+      {
+        $push: { dislikes: id.user._id.toString() },
+      },
+      { returnOriginal: false }
+    );
+  }
+  return data;
+}
+
+async function addComment(id) {
+  console.log(id.params.id, id.body.comment);
+  const comment = await productModel.findByIdAndUpdate(
+    { _id: id.params.id },
+    {
+      $push: { comments: { comment: id.body.comment } },
+    },
+    {
+      new: true,
+      _id: false,
+    }
+  );
+  return comment;
+}
+
+async function mostLikes(data) {
+  const likes = await ProductModel.find().sort({ likes: -1 }).limit(1);
+  console.log("likes", likes);
+  return likes;
+}
+
 module.exports = {
   addProduct,
   updateProduct,
   deleteProduct,
   getProducts,
   getTypeProducts,
+  recentProducts,
+  addLikes,
+  adDislikes,
+  addComment,
+  mostLikes,
 };

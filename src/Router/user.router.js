@@ -7,12 +7,12 @@ const { addUser, loginUser } = require("../Services/user.service");
 
 Route.post("/signup", async (req, res) => {
   try {
-    const response = await addUser(req.body);
+    const response = await addUser(req);
     response.message
       ? res.status(409).send(response)
       : res.status(201).send(response);
   } catch (e) {
-    res.status(409).send(e.message);
+    res.status(400).json({ error: e.message });
   }
 });
 
