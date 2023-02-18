@@ -1,7 +1,6 @@
 const productModel = require("../Mongoose/model/product.model");
 const modelType = require("../Mongoose/model/medicineType.model");
 const ProductModel = require("../Mongoose/model/product.model");
-const { findByIdAndUpdate } = require("../Mongoose/model/product.model");
 
 async function addProduct(data) {
   const mType = await modelType.findOne({ name: data.body.mtype });
@@ -49,6 +48,15 @@ async function deleteProduct(data) {
 async function getProducts(user) {
   const products = await productModel.find({ addBy: user.user._id });
   return products;
+}
+
+async function getBYIdProducts(user) {
+  // console.log(user.params.id);
+  const product = await productModel.findOne({
+    id: user.params.id,
+    addBy: user.user._id,
+  });
+  return product;
 }
 
 async function getTypeProducts(data) {
@@ -174,6 +182,7 @@ module.exports = {
   deleteProduct,
   getProducts,
   getTypeProducts,
+  getBYIdProducts,
   recentProducts,
   addLikes,
   adDislikes,

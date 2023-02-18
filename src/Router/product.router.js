@@ -5,6 +5,7 @@ const {
   addproduct,
   updateproduct,
   deleteproduct,
+  findByIdProduct,
   getAllProduct,
   getByType,
   recentProduct,
@@ -75,6 +76,23 @@ ProductRouter.get("/products", async (req, res) => {
       status: "success",
       data: {
         Medicines: Products,
+      },
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: "fails",
+      message: error.message,
+    });
+  }
+});
+
+ProductRouter.get("/products/:id", async (req, res) => {
+  try {
+    const Product = await findByIdProduct(req);
+    res.status(200).json({
+      status: "success",
+      data: {
+        Medicine: Product,
       },
     });
   } catch (error) {
