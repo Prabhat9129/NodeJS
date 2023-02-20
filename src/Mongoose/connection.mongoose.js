@@ -1,9 +1,7 @@
 const mongo = require("mongoose");
+const mongoURL = process.env.DATABASE;
 
-const mongoURL =
-  "mongodb+srv://prabhatDixit:Ta7P37viTTNh3L80@nodejsapis.rii3yw3.mongodb.net/?retryWrites=true&w=majority";
-
-mongoConnection = () => {
+async function mongoConnection() {
   mongo.connection.once("open", () => {
     console.log("connection redy");
   });
@@ -11,10 +9,10 @@ mongoConnection = () => {
     console.log(`Not connected, error ${error}`);
   });
   mongo.set("strictQuery", true);
-  mongo.connect(mongoURL, () => {
+  await mongo.connect(mongoURL, () => {
     useNewUrlParser: true;
     useUnifideTopology: true;
   });
-};
+}
 
-//module.exports = { mongoConnection };
+module.exports = { mongoConnection };

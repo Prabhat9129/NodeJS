@@ -13,46 +13,100 @@ const {
 } = require("../Services/product.service");
 
 async function addproduct(data) {
-  return await addProduct(data);
+  try {
+    return await addProduct(data);
+  } catch (err) {
+    throw err;
+  }
 }
 
+/**
+ *
+ * @param {*} data
+ * @returns
+ */
 async function updateproduct(data) {
-  return await updateProduct(data);
+  try {
+    return await updateProduct(data);
+  } catch (err) {
+    throw err;
+  }
 }
 
+/**
+ *
+ * @param {*} data
+ * @returns
+ */
 async function deleteproduct(data) {
-  return await deleteProduct(data);
+  try {
+    return await deleteProduct(data);
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function getAllProduct(data) {
-  return await getProducts(data);
+  try {
+    return await getProducts(data);
+  } catch (err) {
+    throw err;
+  }
 }
 async function findByIdProduct(data) {
-  return await getBYIdProducts(data);
+  try {
+    return await getBYIdProducts(data);
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function getByType(data) {
-  return await getTypeProducts(data);
+  try {
+    return await getTypeProducts(data);
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function recentProduct() {
-  return await recentProducts();
+  try {
+    return await recentProducts();
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function addlikes(id) {
-  return await addLikes(id);
+  try {
+    return await addLikes(id);
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function addislikes(id) {
-  return await adDislikes(id);
+  try {
+    return await adDislikes(id);
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function addcomment(id) {
-  return await addComment(id);
+  try {
+    return await addComment(id);
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function mostlikes(data) {
-  return await mostLikes(data);
+  try {
+    return await mostLikes(data);
+  } catch (err) {
+    throw err;
+  }
 }
 
 module.exports = {
