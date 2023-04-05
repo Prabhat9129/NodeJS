@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const userRouter = require("./Router/user.router");
 const { mongoConnection } = require("./Mongoose/connection.mongoose");
@@ -13,6 +14,11 @@ async function connect() {
     console.log(`${err.message}`);
   }
 }
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+  })
+);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 

@@ -2,7 +2,7 @@ const userModel = require("../Mongoose/model/user.model");
 const bcrypt = require("bcrypt");
 
 async function addUser(user) {
-  //console.log("in side", user.body);
+  console.log("in side", user.body);
   const salt = await bcrypt.genSalt();
   let hash = bcrypt.hashSync(user.body.password, salt);
 
@@ -15,7 +15,7 @@ async function addUser(user) {
     if (!user.body.email || !user.body.password) {
       return (data.message = "Please provide email and password");
     } else {
-      data = await userModel.create([
+      data = await userModel.insertMany([
         {
           name: user.body.name,
           email: user.body.email,

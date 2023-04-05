@@ -14,7 +14,7 @@ const userschma = new mongoose.Schema({
   },
   number: {
     type: Number,
-    require: true,
+    require: [true, "Number is Required"],
   },
   password: {
     unique: [true, "password must be unique"],

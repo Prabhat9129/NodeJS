@@ -4,7 +4,7 @@ function SignupCheck() {
   return [
     body("name").trim().isLength({ min: 1 }),
     body("email").isEmail(),
-    body("phone").isMobilePhone("en-IN"),
+    body("number").isMobilePhone("en-IN"),
     body("password").trim().isLength({ min: 8, max: 30 }),
   ];
 }
