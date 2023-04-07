@@ -5,7 +5,7 @@ const { addType } = require("../Controller/medicineType.controller");
 const { getAllTypes } = require("../Services/medicineType.service");
 const { EvAddType } = require("../Middleware/medicineType.middleware");
 const { Validate } = require("../Middleware/validation.middleware");
-typeRouter.use(auth);
+// typeRouter.use(auth);
 
 typeRouter.post("/addType", Validate, EvAddType(), async (req, res) => {
   try {

@@ -21,7 +21,7 @@ const {
   AddComment,
 } = require("../Middleware/product.middleware");
 const { Validate } = require("../Middleware/validation.middleware");
-ProductRouter.use(auth);
+// ProductRouter.use(auth);
 
 ProductRouter.post("/addProduct", Validate, AddProduct(), async (req, res) => {
   try {

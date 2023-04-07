@@ -2,14 +2,16 @@ const userModel = require("../Mongoose/model/user.model");
 const bcrypt = require("bcrypt");
 
 async function addUser(user) {
-  console.log("in side", user.body);
+  // console.log("in side", user.body);
   const salt = await bcrypt.genSalt();
   let hash = bcrypt.hashSync(user.body.password, salt);
 
   const check = await userModel.findOne({ email: user.body.email });
+  // console.log(check);
   let data = {};
   if (check) {
     data.message = "User Alredy Exits";
+    // console.log(data);
     return data;
   } else {
     if (!user.body.email || !user.body.password) {
@@ -23,6 +25,7 @@ async function addUser(user) {
           password: hash,
         },
       ]);
+      console.log(data);
       return data;
     }
   }
